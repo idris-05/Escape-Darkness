@@ -76,12 +76,15 @@ namespace Platformer.Mechanics
             }
         }
 
+
         void UpdateJumpState()
         {
             jump = false;
             switch (jumpState)
             {
                 case JumpState.PrepareToJump:
+                    // Play the before-jump animation
+                    StartCoroutine(AnimationControllerInGame.Instance.PlayBeforeJumpAnimation(transform.position));
                     jumpState = JumpState.Jumping;
                     jump = true;
                     stopJump = false;
@@ -97,6 +100,8 @@ namespace Platformer.Mechanics
                     if (IsGrounded)
                     {
                         Schedule<PlayerLanded>().player = this;
+                        //play the after-jump animation
+                        StartCoroutine(AnimationControllerInGame.Instance.PlayAfterJumpAnimation(transform.position));
                         jumpState = JumpState.Landed;
                     }
                     break;

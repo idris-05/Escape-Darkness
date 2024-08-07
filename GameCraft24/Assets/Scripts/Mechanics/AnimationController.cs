@@ -40,6 +40,9 @@ namespace Platformer.Mechanics
         Animator animator;
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
+        public static object Instance { get; internal set; }
+
+
         protected virtual void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
