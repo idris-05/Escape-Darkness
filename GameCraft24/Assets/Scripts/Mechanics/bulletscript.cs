@@ -9,6 +9,11 @@ public class bulletscript : MonoBehaviour
     private Rigidbody2D rb;
     public float force = 10f;
 
+    private GameObject player;  // Reference to the player GameObject
+    public float offset = 0.5f; // Offset to prevent player from getting stuck
+
+    private shooting shooter;
+
     void Start()
     {
         maincam = Camera.main;
@@ -23,10 +28,59 @@ public class bulletscript : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rot);
 
         Debug.Log("Bullet fired with velocity: " + rb.velocity);
+
+        // Find the player GameObject by name
+        player = GameObject.Find("playergamecraft");
+
+        // Check if the player GameObject was found
+        if (player == null)
+        {
+            Debug.LogError("Player GameObject with name 'playergamecraft' not found.");
+        }
     }
 
-    void Update()
+    public void Initialize(shooting shooter)
     {
-        // Optional: add logic if needed
+        this.shooter = shooter;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if the player GameObject was found
+        if (player != null)
+        {
+            // Get the collision point and normal
+            Vector2 collisionPoint = collision.contacts[0].point;
+            Vector2 collisionNormal = collision.contacts[0].normal;
+
+            // Calculate the new position with an offset away from the wall
+            Vector2 newPosition = collisionPoint + collisionNormal * offset;
+
+            // Teleport the player to the new position
+            player.transform.position = newPosition;
+        }
+
+        // Handle bullet hit logic
+        if (shooter != null)
+        {
+            shooter.BulletHit();
+        }
+
+        // Destroy the bullet
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        // Handle bullet hitting a "border" collider
+        if (collider.CompareTag("border"))
+        {
+            if (shooter != null)
+            {
+                shooter.BulletHit();
+            }
+
+            Destroy(gameObject);
+        }
     }
 }
