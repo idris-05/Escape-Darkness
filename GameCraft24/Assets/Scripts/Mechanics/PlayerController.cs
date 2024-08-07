@@ -24,6 +24,7 @@ namespace Platformer.Mechanics
         public bool controlEnabled = true;
         public bool is_in_shooting_mod = false;
         public GameObject rotatepoint;
+        private shooting shootingScript;  // Reference to the shooting script
 
         bool jump;
         Vector2 move;
@@ -40,7 +41,21 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-            rotatepoint.SetActive(false);
+     
+
+            // Get the shooting script from the rotatepoint object
+            if (rotatepoint != null)
+            {
+                shootingScript = rotatepoint.GetComponent<shooting>();
+                if (shootingScript == null)
+                {
+                    Debug.LogError("Shooting script not found on rotatepoint object.");
+                }
+            }
+            else
+            {
+                Debug.LogError("Rotatepoint object not found.");
+            }
         }
 
         protected override void Update()
@@ -57,6 +72,8 @@ namespace Platformer.Mechanics
                     stopJump = true;
                     Schedule<PlayerStopJump>().player = this;
                 }
+
+                
             }
             else
             {
@@ -64,16 +81,6 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
             base.Update();
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                is_in_shooting_mod = true;
-                rotatepoint.SetActive(true);
-            }
-            else if (is_in_shooting_mod && Input.GetKeyDown(KeyCode.G))
-            {
-                is_in_shooting_mod = false;
-                rotatepoint.SetActive(false);
-            }
         }
 
 
@@ -121,7 +128,6 @@ namespace Platformer.Mechanics
         {
             if (jump && IsGrounded)
             {
-                // Apply jump force when jumping normally
                 velocity.y = jumpTakeOffSpeed * model.jumpModifier;
                 jump = false;
             }
@@ -147,15 +153,13 @@ namespace Platformer.Mechanics
 
         public void Bounce(float force)
         {
-            // Apply bounce force directly
             if (IsGrounded)
             {
                 velocity.y = force;
-                jumpState = JumpState.InFlight; // Ensure the state is InFlight
+                jumpState = JumpState.InFlight;
             }
             else
             {
-                // Handle bouncing in the air
                 velocity.y = force;
                 jumpState = JumpState.InFlight;
             }
