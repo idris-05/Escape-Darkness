@@ -1,1 +1,1 @@
-# ganeCraft24
+# gameCraft24
