@@ -7,16 +7,16 @@ using UnityEngine.SceneManagement;
 public class ScenesManager : MonoBehaviour
 { 
     [SerializeField] Animator transitionAnim;
-    public void StartLevel ()
+    public void StartScene (int indice)
     {
-        StartCoroutine(LoadLevel());
+        StartCoroutine(LoadScene(indice));
     }
 
-    IEnumerator LoadLevel()
+    IEnumerator LoadScene(int indice)
     {
         transitionAnim.SetTrigger("End");
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(indice);
         transitionAnim.SetTrigger("Start");
     }
 
