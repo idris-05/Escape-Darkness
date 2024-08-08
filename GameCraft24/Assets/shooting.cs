@@ -8,7 +8,6 @@ public class shooting : MonoBehaviour
     private Camera maincam;
     private Vector3 mousePos;
     public GameObject bulletPrefab;
-   
     public Transform bulletTr;
     public bool canFire = true;
     private float timer;
@@ -21,22 +20,32 @@ public class shooting : MonoBehaviour
     private PlayerController playerController;
     private bool activatecalldown;
     private float calldown;
-    private float finshedcalldown = 0.1f;
-    public  bool ishided=false;
-    public SpriteRenderer rotatepointSpriteRenderer; 
+    private float finishedCalldown = 0.1f;
+    public bool ishided = false;
+    public SpriteRenderer rotatepointSpriteRenderer;
+
+    // Add a class member to store the allowed variable
+   // private GroundCheck groundCheckScript;
+
+    // Bullet GameObject reference
+    public GameObject bullet;
 
     void Start()
     {
-        
         maincam = Camera.main;
         playerController = FindObjectOfType<PlayerController>();
         rotatePointObject = GameObject.Find("rotatepoint");
 
-        
-
-        // Ensure rotatePointObject starts as active
-      
-       
+        // Retrieve the GroundCheck script and allowed variable from the bullet GameObject
+     /*   if (bullet != null)
+        {
+            GroundCheck groundCheckScript = bullet.GetComponent<GroundCheck>();
+          
+        }
+        else
+        {
+            Debug.LogError("Bullet GameObject not assigned.");
+        }*/
     }
 
     void Update()
@@ -57,32 +66,27 @@ public class shooting : MonoBehaviour
                 if (rotatePointObject != null)
                 {
                     rotatepointSpriteRenderer.enabled = true;
-                    ishided = false;// Make rotate point object visible again
+                    ishided = false; // Make rotate point object visible again
                 }
             }
         }
+
         if (activatecalldown)
         {
             rotatepointSpriteRenderer.enabled = false;
-
-          
-
             calldown += Time.deltaTime;
-            if (calldown > finshedcalldown)
+            if (calldown > finishedCalldown)
             {
                 activatecalldown = false;
                 calldown = 0;
-
             }
-
-
-
         }
 
         bool isJumping = playerController.jumpState == PlayerController.JumpState.Jumping ||
                          playerController.jumpState == PlayerController.JumpState.InFlight;
 
-        if (Input.GetMouseButton(0) && canFire && !bulletInAir && !activatecalldown)
+
+        if (Input.GetMouseButton(0) && canFire && !bulletInAir && !activatecalldown )
         {
             if (isJumping)
             {
@@ -94,12 +98,12 @@ public class shooting : MonoBehaviour
                     bulletInAir = true;
                     if (rotatePointObject != null)
                     {
-                        rotatepointSpriteRenderer.enabled = false;
-
-                        // Hide rotate point object when shooting
+                        rotatepointSpriteRenderer.enabled = false; // Hide rotate point object when shooting
                     }
-                    GameObject bullet = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
-                    bullet.GetComponent<bulletscript>().Initialize(this);
+                    GameObject bulletInstance = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
+                    bulletInstance.GetComponent<bulletscript>().Initialize(this);
+
+                    // No need to retrieve 'allowed' again here
                 }
                 else
                 {
@@ -113,43 +117,39 @@ public class shooting : MonoBehaviour
                 bulletInAir = true;
                 if (rotatePointObject != null)
                 {
-                    rotatepointSpriteRenderer.enabled = false;
-
-                    // Hide rotate point object when shooting
+                    rotatepointSpriteRenderer.enabled = false; // Hide rotate point object when shooting
                 }
-                GameObject bullet = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
-                bullet.GetComponent<bulletscript>().Initialize(this);
+                GameObject bulletInstance = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
+                bulletInstance.GetComponent<bulletscript>().Initialize(this);
+
+                // No need to retrieve 'allowed' again here
             }
             else
             {
                 Debug.Log("Cannot shoot more than once while on the ground.");
             }
         }
-        
-        if (!isJumping && !bulletInAir  && !activatecalldown)
+
+        if (!isJumping && !bulletInAir && !activatecalldown)
         {
-            Debug.Log("halllol");
+            Debug.Log("Resetting shooting states.");
             hasShotWhileInFlight = false;
             hasShotInJump = false;
-            rotatepointSpriteRenderer.enabled = true;
-
-
-
+            if (rotatePointObject != null)
+            {
+                rotatepointSpriteRenderer.enabled = true; // Make rotate point object visible again
+            }
         }
-        
     }
 
     public void BulletHit()
     {
         bulletInAir = false;
-        Debug.Log("hits");
+        Debug.Log("Bullet hit!");
         if (rotatePointObject != null)
         {
-            rotatepointSpriteRenderer.enabled = false; 
-            // Make rotate point object visible again when the bullet hits something
+            rotatepointSpriteRenderer.enabled = false; // Hide rotate point object when the bullet hits something
         }
         activatecalldown = true;
-
-
     }
 }

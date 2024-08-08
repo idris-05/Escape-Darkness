@@ -41,7 +41,7 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-     
+
 
             // Get the shooting script from the rotatepoint object
             if (rotatepoint != null)
@@ -73,7 +73,7 @@ namespace Platformer.Mechanics
                     Schedule<PlayerStopJump>().player = this;
                 }
 
-                
+
             }
             else
             {
