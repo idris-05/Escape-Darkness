@@ -46,6 +46,8 @@ public class bulletscript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Vector2 newPosition = Vector2.zero;
+
         // Check if the player GameObject was found
         if (player != null)
         {
@@ -54,21 +56,35 @@ public class bulletscript : MonoBehaviour
             Vector2 collisionNormal = collision.contacts[0].normal;
 
             // Calculate the new position with an offset away from the wall
-            Vector2 newPosition = collisionPoint + collisionNormal * offset;
-
-            // Teleport the player to the new position
-            player.transform.position = newPosition;
+            newPosition = collisionPoint + collisionNormal * offset;
         }
 
         // Handle bullet hit logic
-        if (shooter != null)
-        {
-            shooter.BulletHit();
-        }
+        if (shooter != null) shooter.BulletHit();
+
+        if (player != null) StartCoroutine(PlayAnimationAndTeleport(player, newPosition));
+        else Destroy(gameObject); // Destroy the bullet
+    }
+
+    IEnumerator PlayAnimationAndTeleport(GameObject player, Vector2 newPosition)
+    {
+        // Disable the sprite renderer and collider to prevent further physical interactions
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
+
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+
+        if (collider != null) collider.enabled = false;
+
+        // Teleport the player to the new position
+        player.transform.position = newPosition;
+        yield return StartCoroutine(AnimationControllerInGame.Instance.PlayteleportWithBulletAnimation((Vector3)newPosition));
 
         // Destroy the bullet
         Destroy(gameObject);
     }
+
+
 
     void OnTriggerEnter2D(Collider2D collider)
     {

@@ -32,6 +32,7 @@ public class AnimationControllerInGame : MonoBehaviour
     public GameObject disappear2AnimationPrefab;
     public GameObject appear1AnimationPrefab;
     public GameObject appear2AnimationPrefab;
+    public GameObject teleportWithBulletAnimationPrefab;
 
 
 
@@ -62,7 +63,7 @@ public class AnimationControllerInGame : MonoBehaviour
     public IEnumerator PlayAfterJumpAnimation(Vector3 playerPosition)
     {
         // Instantiate the animation at the player's position
-        GameObject afterJumpAnimation = Instantiate(afterJumpAnimationPrefab, playerPosition, Quaternion.identity);
+        GameObject afterJumpAnimation = Instantiate(afterJumpAnimationPrefab, playerPosition + new Vector3(-0.04f, -0.117f, 0), Quaternion.identity);
 
         // Get the Animator component and trigger the animation
         Animator animator = afterJumpAnimation.GetComponent<Animator>();
@@ -135,7 +136,26 @@ public class AnimationControllerInGame : MonoBehaviour
         yield break;
     }
 
+    public IEnumerator PlayteleportWithBulletAnimation(Vector3 playerPosition)
+    {
+        // Instantiate the animation at the player's position
+        GameObject teleportWithBulletAnimation = Instantiate(teleportWithBulletAnimationPrefab, playerPosition, Quaternion.identity);
 
+        // Get the Animator component and trigger the animation
+        Animator animator = teleportWithBulletAnimation.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.Play("teleportWithBullet");
+        }
+
+        // Wait for the duration of the animation
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        // Destroy the animation GameObject
+        Destroy(teleportWithBulletAnimation);
+
+        yield break;
+    }
 
 
 }
