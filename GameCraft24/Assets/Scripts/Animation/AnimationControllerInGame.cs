@@ -28,7 +28,16 @@ public class AnimationControllerInGame : MonoBehaviour
 
     public GameObject beforeJumpAnimationPrefab;
     public GameObject afterJumpAnimationPrefab;
+    public GameObject disappear1AnimationPrefab;
+    public GameObject disappear2AnimationPrefab;
+    public GameObject appear1AnimationPrefab;
+    public GameObject appear2AnimationPrefab;
 
+
+
+
+    // diappeare 1 w 2 , 3ndhom controller a animation asmhom normal fih disappear . 
+    // appear hya le contraire t3 disappear : mala dir controller jdid , t5dem b la meme animation (li hya disappear) bsh ydirlha speed = -1 .
     public IEnumerator PlayBeforeJumpAnimation(Vector3 playerPosition)
     {
         // Instantiate the animation at the player's position
@@ -70,4 +79,63 @@ public class AnimationControllerInGame : MonoBehaviour
 
         yield break;
     }
+
+    public IEnumerator PlayDisappearAnimation(Vector3 playerPosition)
+    {
+        // Instantiate the animation at the player's position
+        GameObject disappear1Animation = Instantiate(disappear1AnimationPrefab, playerPosition, Quaternion.identity);
+        GameObject disappear2Animation = Instantiate(disappear2AnimationPrefab, playerPosition, Quaternion.identity);
+
+        // Get the Animator component and trigger the animation
+        Animator animator1 = disappear1Animation.GetComponent<Animator>();
+        Animator animator2 = disappear2Animation.GetComponent<Animator>();
+
+
+        // Start the two animations
+        if (animator1 != null) animator1.Play("disappear1");
+        if (animator2 != null) animator2.Play("disappear2");
+
+        // Or if the animations have different lengths and you want to wait for the longer one
+        float animation1Length = animator1.GetCurrentAnimatorStateInfo(0).length;
+        float animation2Length = animator2.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(Mathf.Max(animation1Length, animation2Length));
+
+        // Destroy the animation GameObject
+        Destroy(disappear1Animation);
+        Destroy(disappear2Animation);
+
+        yield break;
+    }
+
+
+    public IEnumerator PlayAppearAnimation(Vector3 playerPosition)
+    {
+        // Instantiate the animation at the player's position
+        GameObject appear1Animation = Instantiate(appear1AnimationPrefab, playerPosition, Quaternion.identity);
+        GameObject appear2Animation = Instantiate(appear2AnimationPrefab, playerPosition, Quaternion.identity);
+
+        // Get the Animator component and trigger the animation
+        Animator animator1 = appear1Animation.GetComponent<Animator>();
+        Animator animator2 = appear2Animation.GetComponent<Animator>();
+
+
+        // Start the two animations
+        if (animator1 != null) animator1.Play("disappear1");
+        if (animator2 != null) animator2.Play("disappear2");
+
+        // Or if the animations have different lengths and you want to wait for the longer one
+        float animation1Length = animator1.GetCurrentAnimatorStateInfo(0).length;
+        float animation2Length = animator2.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(Mathf.Max(animation1Length, animation2Length));
+
+        // Destroy the animation GameObject
+        Destroy(appear1Animation);
+        Destroy(appear2Animation);
+
+        yield break;
+    }
+
+
+
+
 }
