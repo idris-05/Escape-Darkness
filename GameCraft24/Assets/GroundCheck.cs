@@ -1,28 +1,62 @@
-/*using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class GroundCheck : MonoBehaviour
+public class PointInPolygonChecker : MonoBehaviour
 {
-    public bool allowed = true;
+    // Reference to the player or object you want to check
+    public Transform player;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    // Public variable to indicate if the player is inside the polygon
+    public bool check;
+
+    private PolygonCollider2D polygonCollider;
+    private Vector2[] polygonPoints;
+
+    void Start()
     {
-        // Check if the object we collided with is on the "Ground" layer
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // Get the PolygonCollider2D component on this GameObject
+        polygonCollider = GetComponent<PolygonCollider2D>();
+
+        // Convert the local points to world space
+        polygonPoints = polygonCollider.points;
+        for (int i = 0; i < polygonPoints.Length; i++)
         {
-            allowed = false;
-            Debug.Log("Entered ground - allowed is now: " + allowed);
+            polygonPoints[i] = polygonCollider.transform.TransformPoint(polygonPoints[i]);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void Update()
     {
-        // Check if the object we exited collision with is on the "Ground" layer
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // Get the player's position
+        Vector2 playerPosition = player.position;
+
+        // Check if the player's position is within the polygon
+        check = IsPointInPolygon(polygonPoints, playerPosition);
+
+        if (check)
         {
-            allowed = true;
-            Debug.Log("Exited ground - allowed is now: " + allowed);
+            Debug.Log("Player is inside the polygon!");
         }
+        else
+        {
+            Debug.Log("Player is outside the polygon!");
+        }
+    }
+
+    // Method to check if a point is inside a polygon
+    public bool IsPointInPolygon(Vector2[] polygonPoints, Vector2 point)
+    {
+        int j = polygonPoints.Length - 1;
+        bool inside = false;
+        for (int i = 0; i < polygonPoints.Length; j = i++)
+        {
+            if (((polygonPoints[i].y > point.y) != (polygonPoints[j].y > point.y)) &&
+                (point.x < (polygonPoints[j].x - polygonPoints[i].x) * (point.y - polygonPoints[i].y) / (polygonPoints[j].y - polygonPoints[i].y) + polygonPoints[i].x))
+            {
+                inside = !inside;
+            }
+        }
+        return inside;
     }
 }
-
-*/

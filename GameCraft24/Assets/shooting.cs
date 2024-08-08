@@ -24,28 +24,11 @@ public class shooting : MonoBehaviour
     public bool ishided = false;
     public SpriteRenderer rotatepointSpriteRenderer;
 
-    // Add a class member to store the allowed variable
-   // private GroundCheck groundCheckScript;
-
-    // Bullet GameObject reference
-    public GameObject bullet;
-
     void Start()
     {
         maincam = Camera.main;
         playerController = FindObjectOfType<PlayerController>();
         rotatePointObject = GameObject.Find("rotatepoint");
-
-        // Retrieve the GroundCheck script and allowed variable from the bullet GameObject
-     /*   if (bullet != null)
-        {
-            GroundCheck groundCheckScript = bullet.GetComponent<GroundCheck>();
-          
-        }
-        else
-        {
-            Debug.LogError("Bullet GameObject not assigned.");
-        }*/
     }
 
     void Update()
@@ -85,15 +68,35 @@ public class shooting : MonoBehaviour
         bool isJumping = playerController.jumpState == PlayerController.JumpState.Jumping ||
                          playerController.jumpState == PlayerController.JumpState.InFlight;
 
-
-        if (Input.GetMouseButton(0) && canFire && !bulletInAir && !activatecalldown )
+        // Check if any PointInPolygonChecker has check set to true
+        bool canShoot = CanShoot();
+        if (canShoot)
         {
-            if (isJumping)
+            if (Input.GetMouseButton(0) && canFire && !bulletInAir && !activatecalldown)
             {
-                if (!hasShotInJump)
+                if (isJumping)
+                {
+                    if (!hasShotInJump)
+                    {
+                        Debug.Log("Shooting...");
+                        canFire = false;
+                        hasShotInJump = true;
+                        bulletInAir = true;
+                        if (rotatePointObject != null)
+                        {
+                            rotatepointSpriteRenderer.enabled = false; // Hide rotate point object when shooting
+                        }
+                        GameObject bulletInstance = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
+                        bulletInstance.GetComponent<bulletscript>().Initialize(this);
+                    }
+                    else
+                    {
+                        Debug.Log("Cannot shoot more than once while in flight.");
+                    }
+                }
+                else if (!hasShotInJump)
                 {
                     Debug.Log("Shooting...");
-                    canFire = false;
                     hasShotInJump = true;
                     bulletInAir = true;
                     if (rotatePointObject != null)
@@ -102,31 +105,11 @@ public class shooting : MonoBehaviour
                     }
                     GameObject bulletInstance = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
                     bulletInstance.GetComponent<bulletscript>().Initialize(this);
-
-                    // No need to retrieve 'allowed' again here
                 }
                 else
                 {
-                    Debug.Log("Cannot shoot more than once while in flight.");
+                    Debug.Log("Cannot shoot more than once while on the ground.");
                 }
-            }
-            else if (!hasShotInJump)
-            {
-                Debug.Log("Shooting...");
-                hasShotInJump = true;
-                bulletInAir = true;
-                if (rotatePointObject != null)
-                {
-                    rotatepointSpriteRenderer.enabled = false; // Hide rotate point object when shooting
-                }
-                GameObject bulletInstance = Instantiate(bulletPrefab, bulletTr.position, Quaternion.identity);
-                bulletInstance.GetComponent<bulletscript>().Initialize(this);
-
-                // No need to retrieve 'allowed' again here
-            }
-            else
-            {
-                Debug.Log("Cannot shoot more than once while on the ground.");
             }
         }
 
@@ -151,5 +134,18 @@ public class shooting : MonoBehaviour
             rotatepointSpriteRenderer.enabled = false; // Hide rotate point object when the bullet hits something
         }
         activatecalldown = true;
+    }
+
+    private bool CanShoot()
+    {
+        PointInPolygonChecker[] checkers = FindObjectsOfType<PointInPolygonChecker>();
+        foreach (PointInPolygonChecker checker in checkers)
+        {
+            if (checker.check)
+            {
+                return false; // If any checker has check as true, prevent shooting
+            }
+        }
+        return true; // Allow shooting if all checkers have check as false
     }
 }
