@@ -33,7 +33,7 @@ public class shooting : MonoBehaviour
 
     void Update()
     {
-        if (playerController.is_in_shooting_mod)
+        if (playerController.shootEnabled)
         {
         if (EscapeKeyHandler.gameIsPaused) return;
 

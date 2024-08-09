@@ -52,6 +52,7 @@ public class MoveScript : MonoBehaviour
             playerController.shootEnabled = true;
             Destroy(this.gameObject);
 
+
         }
     }
 

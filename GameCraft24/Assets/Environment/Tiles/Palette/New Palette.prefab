@@ -2677,6 +2677,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 20, y: -7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 396
+      m_TileSpriteIndex: 396
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -1, y: -6, z: 0}
     second:
       serializedVersion: 2
@@ -4841,6 +4851,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 579224eb9720a5540b5203982c11cbe6, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 6aecb34bea16f504cb1937a8d08016a0, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: a5f9655f3ecaf084d910273eaee2a0b2, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 1468569510, guid: c02bce2b95237e0489e35b71f83b1e8c, type: 3}
@@ -5634,8 +5646,10 @@ Tilemap:
     m_Data: {fileID: -74148836, guid: c02bce2b95237e0489e35b71f83b1e8c, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1446470044, guid: c02bce2b95237e0489e35b71f83b1e8c, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 0b44675fd76de32468f8cd2a6f130820, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 396
+  - m_RefCount: 397
     m_Data:
       e00: 1
       e01: 0
@@ -5654,13 +5668,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 396
+  - m_RefCount: 397
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -1, y: -19, z: 0}
-  m_Size: {x: 20, y: 20, z: 1}
+  m_Size: {x: 22, y: 20, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -5729,7 +5743,7 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &9159922298129660961
+--- !u!114 &1703510461570640972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
