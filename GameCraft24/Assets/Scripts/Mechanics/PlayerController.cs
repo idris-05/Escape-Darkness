@@ -6,6 +6,8 @@ using static Platformer.Core.Simulation;
 using Platformer.Model;
 using Platformer.Core;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
+using System.Data.Common;
 
 namespace Platformer.Mechanics
 {
@@ -31,6 +33,20 @@ namespace Platformer.Mechanics
         SpriteRenderer spriteRenderer;
         internal Animator animator;
         readonly PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        /// <summary>
+        //added by adem
+        //
+        public Rigidbody2D rigidbody;
+
+        public GameObject cat;
+         public float moveSpeed = 5f; // Speed of the movement
+    public float moveDistance = 30f; // Distance to move before stopping
+
+    private float distanceMoved = 0f;
+    private Vector2 startPosition;
+
+    public bool shootEnabled;
+    //added by adem
 
         public Bounds Bounds => collider2d.bounds;
 
@@ -41,7 +57,7 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-
+     
 
             // Get the shooting script from the rotatepoint object
             if (rotatepoint != null)
@@ -56,12 +72,23 @@ namespace Platformer.Mechanics
             {
                 Debug.LogError("Rotatepoint object not found.");
             }
+            //added by adem
+            FirstSceneStart();
         }
 
         protected override void Update()
         {
+            //added by adem
+            if (cat != null)
+            {
+                FirstSceneUpdate();
+            }else
+            {
+
             if (controlEnabled)
             {
+                // the player can shoot
+
                 move.x = Input.GetAxis("Horizontal");
                 if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
                 {
@@ -72,8 +99,6 @@ namespace Platformer.Mechanics
                     stopJump = true;
                     Schedule<PlayerStopJump>().player = this;
                 }
-
-
             }
             else
             {
@@ -81,6 +106,7 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
             base.Update();
+        }
         }
 
 
@@ -173,5 +199,31 @@ namespace Platformer.Mechanics
             InFlight,
             Landed
         }
+
+
+
+
+
+     public void FirstSceneStart()
+    {
+         startPosition = transform.position;
+         shootEnabled = false;
     }
+    public void FirstSceneUpdate()
+    {
+        // movement
+         if (distanceMoved < moveDistance)
+        {
+            float moveStep = moveSpeed * Time.deltaTime;
+            transform.Translate(Vector2.right * moveStep);
+            distanceMoved += moveStep;
+            Debug.Log("distanceMoved: " + distanceMoved);
+            Debug.Log("moveDistance: " + moveDistance);
+        }else{
+
+                // the player is stopped
+                rigidbody.velocity = Vector2.zero;
+                // the player is grounded
+    }
+}}
 }

@@ -33,6 +33,8 @@ public class shooting : MonoBehaviour
 
     void Update()
     {
+        if (playerController.is_in_shooting_mod)
+        {
         if (EscapeKeyHandler.gameIsPaused) return;
 
         mousePos = maincam.ScreenToWorldPoint(Input.mousePosition);
@@ -125,7 +127,7 @@ public class shooting : MonoBehaviour
                 rotatepointSpriteRenderer.enabled = true; // Make rotate point object visible again
             }
         }
-    }
+    }}
 
     public void BulletHit()
     {
