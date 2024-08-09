@@ -711,7 +711,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1598507533}
+    m_TransformParent: {fileID: 1560110535}
     m_Modifications:
     - target: {fileID: 2038457467341176880, guid: 47935a45913226248b019a12606cab2e,
         type: 3}
@@ -812,6 +812,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2507303646682784648, guid: 47935a45913226248b019a12606cab2e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7622157184019175378, guid: 47935a45913226248b019a12606cab2e,
         type: 3}
@@ -4113,6 +4118,7 @@ RectTransform:
   m_Children:
   - {fileID: 1254736555}
   - {fileID: 1598507533}
+  - {fileID: 127613444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4213,7 +4219,6 @@ RectTransform:
   m_Children:
   - {fileID: 1137458171}
   - {fileID: 761572399}
-  - {fileID: 127613444}
   m_Father: {fileID: 1560110535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

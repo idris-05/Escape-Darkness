@@ -442,6 +442,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 672862519661724477, guid: 2e102baf328efec48b475321d8a57a18,
+        type: 3}
+      propertyPath: offset
+      value: 29.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2187846984167678735, guid: 2e102baf328efec48b475321d8a57a18,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1818,106 +1823,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1 &666398342
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 666398345}
-  - component: {fileID: 666398344}
-  - component: {fileID: 666398343}
-  m_Layer: 0
-  m_Name: polygone1 (7)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!60 &666398343
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 666398342}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0.24049497}
-      - {x: -1.9802752, y: 0.2630413}
-      - {x: -1.8270488, y: -0.72455394}
-      - {x: -0.95051193, y: -1.2516432}
-      - {x: 0.4767456, y: -1.0396364}
-      - {x: 1.2964115, y: -0.58956456}
-      - {x: 1.3793408, y: -0.6310289}
-      - {x: 1.5223646, y: 0.1980614}
-  m_UseDelaunayMesh: 0
---- !u!114 &666398344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 666398342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 749fbabae6c07d44d8a252277ff3d1e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 337071962}
-  check: 0
---- !u!4 &666398345
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 666398342}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.78, y: 3.97, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &688790145
 GameObject:
   m_ObjectHideFlags: 0
@@ -4145,6 +4050,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2507303646682784648, guid: 47935a45913226248b019a12606cab2e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7622157184019175378, guid: 47935a45913226248b019a12606cab2e,
         type: 3}
       propertyPath: m_Name
@@ -4555,6 +4465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd76b1030fe41d43ad561281579da02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indx: 3
 --- !u!19719996 &1168493594
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -33282,7 +33193,6 @@ SceneRoots:
   - {fileID: 270341469}
   - {fileID: 1007456235}
   - {fileID: 1956004010}
-  - {fileID: 666398345}
   - {fileID: 1531531434}
   - {fileID: 264431242}
   - {fileID: 1367701050}

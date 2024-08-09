@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerTeleport : MonoBehaviour
 {
+    public float offset;
     public enum TeleportState
     {
         State1,
@@ -12,7 +13,7 @@ public class PlayerTeleport : MonoBehaviour
 
     public TeleportState currentState = TeleportState.State1;
 
-    private bool canTeleport = false; // Boolean to check if teleportation is allowed
+    private bool canTeleport = true; // Boolean to check if teleportation is allowed
 
     private void Start()
     {
@@ -22,9 +23,11 @@ public class PlayerTeleport : MonoBehaviour
 
     private void Update()
     {
+       // Debug.Log(canTeleport);
         // Check if the player is in State1 or State2 and teleport accordingly
         if (Input.GetKeyDown(KeyCode.T) && canTeleport && !IsBulletPresent()) // Assuming "T" key is used for teleportation
         {
+            Debug.Log("hola");
             TeleportPlayer();
         }
     }
@@ -35,12 +38,12 @@ public class PlayerTeleport : MonoBehaviour
 
         if (currentState == TeleportState.State1)
         {
-            currentPosition.y -= 29.7f;
+            currentPosition.y -= offset;
             currentState = TeleportState.State2; // Change to the next state
         }
         else if (currentState == TeleportState.State2)
         {
-            currentPosition.y += 29.7f;
+            currentPosition.y += offset;
             currentState = TeleportState.State1; // Change to the next state
         }
 

@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement; // Required for scene management
 
 public class DoorWinTrigger : MonoBehaviour
 {
+    public int indx;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if the colliding object is the player
@@ -20,7 +21,7 @@ public class DoorWinTrigger : MonoBehaviour
 
                 // Scene transition code would go here
                 // Uncomment the following line to load the next scene
-                // SceneManager.LoadScene("NextSceneName"); 
+                 SceneManager.LoadScene(indx); 
             }
             else
             {

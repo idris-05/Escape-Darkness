@@ -79,12 +79,20 @@ namespace Platformer.Mechanics
 
         protected override void Update()
         {
+            GameObject finishObject = GameObject.FindGameObjectWithTag("Finish");
+            if (finishObject != null)
+            {
+                controlEnabled = true;
+              //  Debug.Log("Finish object detected, shooting enabled.");
+            }
+
             //added by adem
             if (cat != null)
             {
                 FirstSceneUpdate();
             } else
             {
+                shootEnabled=true;
 
                 if (controlEnabled)
                 {
