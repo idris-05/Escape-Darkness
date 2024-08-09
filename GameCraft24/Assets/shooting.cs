@@ -33,6 +33,8 @@ public class shooting : MonoBehaviour
 
     void Update()
     {
+        if (EscapeKeyHandler.gameIsPaused) return;
+
         mousePos = maincam.ScreenToWorldPoint(Input.mousePosition);
         Vector3 rotation = mousePos - transform.position;
         float rotz = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
