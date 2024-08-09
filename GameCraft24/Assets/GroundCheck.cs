@@ -34,14 +34,7 @@ public class PointInPolygonChecker : MonoBehaviour
         // Check if the player's position is within the polygon
         check = IsPointInPolygon(polygonPoints, playerPosition);
 
-        if (check)
-        {
-            Debug.Log("Player is inside the polygon!");
-        }
-        else
-        {
-            Debug.Log("Player is outside the polygon!");
-        }
+       
     }
 
     // Method to check if a point is inside a polygon

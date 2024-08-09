@@ -7,19 +7,20 @@ TagManager:
   - TutorialRequirement
   - wall
   - border
+  - bullette
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - key
   - Water
   - UI
   - PostProcessing
   - Player
   - OneWayPlatform
   - Ground
-  - 
-  - 
+  - door
+  - tpblocker
   - 
   - 
   - 

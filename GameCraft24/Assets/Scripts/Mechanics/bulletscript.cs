@@ -1,3 +1,4 @@
+using Platformer.Mechanics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,22 +68,31 @@ public class bulletscript : MonoBehaviour
     }
 
     IEnumerator PlayAnimationAndTeleport(GameObject player, Vector2 newPosition)
-    {
+    {   // Reset the player's speed after teleporting
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        if (playerController != null)
+        {
+            playerController.ResetSpeed(); // Use the new method to reset the speed
+            Debug.Log("Player speed has been reset.");
+        }
         // Disable the sprite renderer and collider to prevent further physical interactions
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
 
         if (spriteRenderer != null) spriteRenderer.enabled = false;
-
         if (collider != null) collider.enabled = false;
 
         // Teleport the player to the new position
         player.transform.position = newPosition;
         yield return StartCoroutine(AnimationControllerInGame.Instance.PlayteleportWithBulletAnimation((Vector3)newPosition));
 
+      
+
         // Destroy the bullet
         Destroy(gameObject);
     }
+
+
 
 
 

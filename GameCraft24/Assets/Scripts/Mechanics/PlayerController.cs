@@ -39,14 +39,15 @@ namespace Platformer.Mechanics
         public Rigidbody2D rigidbody;
 
         public GameObject cat;
-         public float moveSpeed = 5f; // Speed of the movement
-    public float moveDistance = 30f; // Distance to move before stopping
+        public float moveSpeed = 5f; // Speed of the movement
+        public float moveDistance = 30f; // Distance to move before stopping
 
-    private float distanceMoved = 0f;
-    private Vector2 startPosition;
+        private float distanceMoved = 0f;
+        private Vector2 startPosition;
 
-    public bool shootEnabled;
-    //added by adem
+        public bool shootEnabled;
+        public bool hasKey = false;
+        //added by adem
 
         public Bounds Bounds => collider2d.bounds;
 
@@ -57,7 +58,7 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-     
+
 
             // Get the shooting script from the rotatepoint object
             if (rotatepoint != null)
@@ -82,31 +83,31 @@ namespace Platformer.Mechanics
             if (cat != null)
             {
                 FirstSceneUpdate();
-            }else
+            } else
             {
 
-            if (controlEnabled)
-            {
-                // the player can shoot
+                if (controlEnabled)
+                {
+                    // the player can shoot
 
-                move.x = Input.GetAxis("Horizontal");
-                if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
-                {
-                    jumpState = JumpState.PrepareToJump;
+                    move.x = Input.GetAxis("Horizontal");
+                    if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
+                    {
+                        jumpState = JumpState.PrepareToJump;
+                    }
+                    else if (Input.GetButtonUp("Jump"))
+                    {
+                        stopJump = true;
+                        Schedule<PlayerStopJump>().player = this;
+                    }
                 }
-                else if (Input.GetButtonUp("Jump"))
+                else
                 {
-                    stopJump = true;
-                    Schedule<PlayerStopJump>().player = this;
+                    move.x = 0;
                 }
+                UpdateJumpState();
+                base.Update();
             }
-            else
-            {
-                move.x = 0;
-            }
-            UpdateJumpState();
-            base.Update();
-        }
         }
 
 
@@ -204,26 +205,57 @@ namespace Platformer.Mechanics
 
 
 
-     public void FirstSceneStart()
-    {
-         startPosition = transform.position;
-         shootEnabled = false;
-    }
-    public void FirstSceneUpdate()
-    {
-        // movement
-         if (distanceMoved < moveDistance)
+        public void FirstSceneStart()
         {
-            float moveStep = moveSpeed * Time.deltaTime;
-            transform.Translate(Vector2.right * moveStep);
-            distanceMoved += moveStep;
-            Debug.Log("distanceMoved: " + distanceMoved);
-            Debug.Log("moveDistance: " + moveDistance);
-        }else{
+            startPosition = transform.position;
+            shootEnabled = false;
+        }
+        public void FirstSceneUpdate()
+        {
+            // movement
+            if (distanceMoved < moveDistance)
+            {
+                float moveStep = moveSpeed * Time.deltaTime;
+                transform.Translate(Vector2.right * moveStep);
+                distanceMoved += moveStep;
+                Debug.Log("distanceMoved: " + distanceMoved);
+                Debug.Log("moveDistance: " + moveDistance);
+            } else {
 
                 // the player is stopped
                 rigidbody.velocity = Vector2.zero;
                 // the player is grounded
-    }
-}}
+            }
+         
+
+
+
+        }
+        public void OnTriggerEnter2D(Collider2D collision) 
+            {
+                // Check if the player collides with an object with the "key" layer
+                if (collision.gameObject.layer == LayerMask.NameToLayer("key"))
+                {
+                    // Player has obtained the key
+                    hasKey = true;
+
+                    // Optionally, you can destroy the key object after picking it up
+                    Destroy(collision.gameObject);
+
+        // Display a message for testing
+                    Debug.Log("Key obtained!");
+                }
 }
+ 
+      
+            // Other code...
+
+        public void ResetSpeed()
+            {
+                velocity = Vector2.zero;
+                targetVelocity = Vector2.zero; // Reset targetVelocity if accessible
+            }
+    }
+
+}
+   

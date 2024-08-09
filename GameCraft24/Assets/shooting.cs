@@ -12,13 +12,13 @@ public class shooting : MonoBehaviour
     public bool canFire = true;
     private float timer;
     public float timeBtwFiring = 0.5f;
-    private bool bulletInAir = false;
-    private bool hasShotInJump = false;
-    private bool hasShotWhileInFlight = false;
+    public bool bulletInAir = false;
+    public  bool hasShotInJump = false;
+  
     private GameObject rotatePointObject;
 
     private PlayerController playerController;
-    private bool activatecalldown;
+    public  bool activatecalldown;
     private float calldown;
     private float finishedCalldown = 0.1f;
     public bool ishided = false;
@@ -119,8 +119,8 @@ public class shooting : MonoBehaviour
 
         if (!isJumping && !bulletInAir && !activatecalldown)
         {
-            Debug.Log("Resetting shooting states.");
-            hasShotWhileInFlight = false;
+           
+         
             hasShotInJump = false;
             if (rotatePointObject != null)
             {
