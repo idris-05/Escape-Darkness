@@ -12,6 +12,14 @@ and time-switching. As the journey unfolds, Mikasa reveals
 the truth to Dr. Eren: he cannot alter time, and must accept his loss 
 to escape the darkness.
 
+<div align="center">
+	<img src=".\GameCraft24\Assets\Images\menu.png" width="600">
+    <img src=".\GameCraft24\Assets\Images\tuto.png" width="600">
+    <img src=".\GameCraft24\Assets\Images\anim.png" width="600">
+    <img src=".\GameCraft24\Assets\Images\ui.png" width="600">
+    <img src=".\GameCraft24\Assets\Images\key.png" width="600">
+</div>
+
 This game was developed during a GameJam, where it won third place and received the award for Best Audio.
 
 
